@@ -3,4 +3,11 @@ One aspect of my AI named S.H.A.N.E., is the voice-command digital assistant cap
 
 I'm a self-taught programmer, so I look forward to your CONSTRUCTIVE feedback.
 
+I recommend installing PyAudio first, before installing Speech Recognition or Python-text-to-Speech (pyttsx3).
+You'll need to go here: https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio and find the correct .whl file to properly install PyAudio on Windows.
+For example, I had to download PyAudio‑0.2.11‑cp38‑cp38‑win_amd64.whl because I have Python 3.8 installed and I have a 64-bit version of windows.
+To install a .whl file, download the file. Assuming it downloaded to your Downloads file, open the Downloads file folder. Right click on the name of the file and copy it. Then type cmd in the file explorer bar. In the command prompt, type pip install (copy and paste the file name) and then add .whl to the name.
 
+It should look like this: C:\your filepath\Downloads> pip install PyAudio‑0.2.11‑cp38‑cp38‑win_amd64.whl
+
+You should be good to install SpeechRecognition and pyttsx3~=2.71 from the requirements.txt file.
