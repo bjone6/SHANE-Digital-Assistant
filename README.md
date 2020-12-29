@@ -15,4 +15,4 @@ It should look like this: C:\your filepath\Downloads> pip install PyAudio‑0.2.
 You should be good to install SpeechRecognition and pyttsx3~=2.71 from the requirements.txt file.
 
 # Update 29 Dec 20
-In Video #119 on my YouTube channel, I made significant updates to S.H.A.N.E. I've updated the files in the Github. Watch the video here: 
+In Video #119 on my YouTube channel, I made significant updates to S.H.A.N.E. I've updated the files in the Github. Watch the video here: https://youtu.be/qhITM2q_FyQ
