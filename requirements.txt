@@ -1,3 +1,6 @@
 PyAudio-0.2.11-cp38-cp38-win_amd64.whl
 SpeechRecognition
 pyttsx3~=2.71
+pyserial
+pyowm
+yfinance
