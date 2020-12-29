@@ -1,1 +1,2 @@
-OPENWEATHER = '3e9ff28f0ce20ceb56c756c57c1165d9'
+# Go here to get your own API key:  https://openweathermap.org/api  
+OPENWEATHER = 'ENTER YOUR API KEY HERE'
