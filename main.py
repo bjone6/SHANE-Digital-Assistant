@@ -9,9 +9,6 @@ import operator  # used for math operations
 import random  # will be used throughout for random response choices
 import os  # used to interact with the computer's directory
 
-# Speech Recognition Constants
-recognizer = sr.Recognizer()
-microphone = sr.Microphone()
 
 # Python Text-to-Speech (pyttsx3) Constants
 engine = pyttsx3.init()
@@ -258,8 +255,14 @@ class Shane:
             except sr.RequestError:
                 print("Network error.")
 
+    # change voice, list of 48 voices exist
+    def change_voice(self, voice_id=0):
+        voices = engine.getProperty('voices')
+        engine.setProperty('voice', voices[voice_id].id)
+
 
 s = Shane()
+s.changeVoice(voice_id=33)
 s.start_conversation_log()
 # Used to prevent people from asking the same thing over and over
 previous_response = ""
