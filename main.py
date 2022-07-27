@@ -70,27 +70,27 @@ class Shane:
     def open_things(self, command):
         # Will need to expand on "open" commands
         if command == "open youtube":
-            s.speak("Opening YouTube.")
+            self.speak("Opening YouTube.")
             webbrowser.open("https://www.youtube.com/channel/UCW34Ghe9-_TCA5Vy3-Agfnw")
             pass
 
         elif command == "open facebook":
-            s.speak("Opening Facebook.")
+            self.speak("Opening Facebook.")
             webbrowser.open("https://www.facebook.com")
             pass
 
         elif command == "open my documents":
-            s.speak("Opening My Documents.")
+            self.speak("Opening My Documents.")
             os.startfile("C:/Users/Notebook/Documents")
             pass
 
         elif command == "open my downloads folder":
-            s.speak("Opening your downloads folder.")
+            self.speak("Opening your downloads folder.")
             os.startfile("C:/Users/Notebook/Downloads")
             pass
 
         else:
-            s.speak("I don't know how to open that yet.")
+            self.speak("I don't know how to open that yet.")
             pass
 
     # Used to track the date of the conversation, may need to add the time in the future
@@ -110,10 +110,10 @@ class Shane:
         today = date.today()
         now = datetime.now()
         if "today" in command:
-            s.speak("Today is " + today.strftime("%B") + " " + today.strftime("%d") + ", " + today.strftime("%Y"))
+            self.speak("Today is " + today.strftime("%B") + " " + today.strftime("%d") + ", " + today.strftime("%Y"))
 
         elif command == "what time is it":
-            s.speak("It is " + now.strftime("%I") + now.strftime("%M") + now.strftime("%p") + ".")
+            self.speak("It is " + now.strftime("%I") + now.strftime("%M") + now.strftime("%p") + ".")
 
         elif "yesterday" in command:
             date_intent = today - timedelta(days=1)
@@ -146,7 +146,7 @@ class Shane:
             w = observation.weather
             temp = w.temperature('fahrenheit')
             status = w.detailed_status
-            s.speak("It is currently " + str(int(temp['temp'])) + " degrees and " + status)
+            self.speak("It is currently " + str(int(temp['temp'])) + " degrees and " + status)
 
         else:
             print("I haven't programmed that yet.")
@@ -171,7 +171,7 @@ class Shane:
         int1, int2 = int(li[0]), int(li[2])
         # this uses the operand from the get_operator function against the two intengers
         result = op(int1, int2)
-        s.speak(str(int1) + " " + li[1] + " " + str(int2) + " equals " + str(result))
+        self.speak(str(int1) + " " + li[1] + " " + str(int2) + " equals " + str(result))
 
     # Checks "what is" to see if we're doing math
     def what_is_checker(self, command):
@@ -192,7 +192,7 @@ class Shane:
 
     # Checks the first word in the command to determine if it's a search word
     def use_search_words(self, command):
-        s.speak("Here is what I found.")
+        self.speak("Here is what I found.")
         webbrowser.open("https://www.google.com/search?q={}".format(command))
 
     # Analyzes the command
@@ -208,7 +208,7 @@ class Shane:
             #     ser.write(listening_byte.encode("ascii"))  # encodes and sends the serial byte
 
             elif command == "introduce yourself":
-                s.speak("I am Shane. I'm a digital assistant.")
+                self.speak("I am Shane. I'm a digital assistant.")
 
             elif command == "what time is it":
                 self.understand_time(command)
@@ -217,7 +217,7 @@ class Shane:
                 current_feelings = ["I'm okay.", "I'm doing well. Thank you.", "I am doing okay."]
                 # selects a random choice of greetings
                 greeting = random.choice(current_feelings)
-                s.speak(greeting)
+                self.speak(greeting)
 
             elif "weather" in command:
                 self.get_weather(command)
@@ -230,7 +230,7 @@ class Shane:
                 self.use_search_words(command)
 
             else:
-                s.speak("I don't know how to do that yet.")
+                self.speak("I don't know how to do that yet.")
 
                 if LED:
                     listening_byte = "H"  # H matches the Arduino sketch code for the green color
@@ -258,9 +258,7 @@ class Shane:
                         if LED:
                             listening_byte = "L"  # L matches the Arduino sketch code for the blue color
                             ser.write(listening_byte.encode("ascii"))  # encodes and sends the serial byte
-                        s.speak("How can I help you?")
-                        return response.lower()
-
+                        self.speak("How can I help you?")
                     else:
                         pass
             except sr.WaitTimeoutError:
