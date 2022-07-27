@@ -38,28 +38,11 @@ except serial.SerialException:
 
 
 class Shane:
+    awake = False
+
     def __init__(self):
         self.recognizer = sr.Recognizer()
         self.microphone = sr.Microphone()
-
-    # Used to hear the commands after the wake word has been said
-    def hear(self, recognizer, microphone, response):
-        try:
-            with microphone as source:
-                print("Waiting for command.")
-                recognizer.adjust_for_ambient_noise(source)
-                recognizer.dynamic_energy_threshold = 3000
-                # May reduce the time out in the future
-                audio = recognizer.listen(source, timeout=5.0)
-                command = recognizer.recognize_google(audio)
-                s.remember(command)
-                return command.lower()
-        except sr.WaitTimeoutError:
-            pass
-        except sr.UnknownValueError:
-            pass
-        except sr.RequestError:
-            print("Network error.")
 
     # Used to speak to the user
     def speak(self, text):
@@ -243,7 +226,10 @@ class Shane:
             pass
 
     # Used to listen for the wake word
-    def listen(self, recognizer, microphone):
+    def listen(self):
+        recognizer = self.recognizer
+        microphone = self.microphone
+
         while True:
             try:
                 with microphone as source:
@@ -252,16 +238,20 @@ class Shane:
                     recognizer.dynamic_energy_threshold = 3000
                     audio = recognizer.listen(source, timeout=5.0)
                     response = recognizer.recognize_google(audio)
-
+                    print(response)
                     if response == WAKE:
-
+                        self.awake = True
                         if LED:
                             listening_byte = "L"  # L matches the Arduino sketch code for the blue color
                             ser.write(listening_byte.encode("ascii"))  # encodes and sends the serial byte
                         self.speak("How can I help you?")
                     else:
-                        pass
+                        if self.awake:
+                            self.remember(response)
+                            return response.lower()
             except sr.WaitTimeoutError:
+                self.awake = False
+                print("awake reset")
                 pass
             except sr.UnknownValueError:
                 pass
@@ -274,13 +264,11 @@ s.start_conversation_log()
 # Used to prevent people from asking the same thing over and over
 previous_response = ""
 while True:
-    response = s.listen(recognizer, microphone)
-    command = s.hear(recognizer, microphone, response)
+    command = s.listen()
 
     if command == previous_response:
         s.speak("You already asked that. Ask again if you want to do that again.")
         previous_command = ""
-        response = s.listen(recognizer, microphone)
-        command = s.hear(recognizer, microphone, response)
+        command = s.listen()
     s.analyze(command)
     previous_response = command
